@@ -14,7 +14,7 @@
 <body>
 
   <div id="app">
-    @include('components.layouts.admin.sidebar')
+    @include('components.layouts.admin.sidebar', ["title" => $title ?? "Dashboard"])
 
     <div id="main">
       <header class="mb-3">
@@ -38,7 +38,6 @@
 
 <script src="{{ asset('js/app.js') }}"></script>
 <script src="{{ asset('js/script.js') }}"></script>
-<script src="{{ asset('js/core.js') }}"></script>
 @include('sweetalert::alert')
 @stack("script")
 

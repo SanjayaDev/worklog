@@ -1,4 +1,4 @@
-<x-layouts.admin.app>
+<x-layouts.admin.app title="Dashboard">
 
   <div class="card">
     <div class="card-body">
