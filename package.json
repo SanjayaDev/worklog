@@ -13,7 +13,10 @@
     "axios": "^0.25",
     "laravel-mix": "^6.0.6",
     "lodash": "^4.17.19",
-    "postcss": "^8.1.14"
+    "postcss": "^8.1.14",
+    "resolve-url-loader": "^5.0.0",
+    "sass": "^1.51.0",
+    "sass-loader": "^12.1.0"
   },
   "name": "worklog",
   "description": "<p align=\"center\"><a href=\"https://laravel.com\" target=\"_blank\"><img src=\"https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg\" width=\"400\"></a></p>",
@@ -34,6 +37,7 @@
   },
   "homepage": "https://github.com/SanjayaDev/worklog#readme",
   "dependencies": {
+    "@fortawesome/fontawesome-free": "^6.1.1",
     "@popperjs/core": "^2.11.5",
     "bootstrap": "^5.1.3"
   }
