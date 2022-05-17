@@ -21556,3 +21556,22 @@ readers do not read off random characters that represent icons */
   font-family: "Font Awesome 6 Free";
   font-weight: 400;
 }
+
+.parent-search {
+  position: relative;
+}
+.parent-search .list-search {
+  border: 1px solid #0d6efd;
+  position: absolute;
+  width: 100%;
+}
+.parent-search .list-search p {
+  padding: 5px;
+  cursor: pointer;
+  margin-bottom: 0;
+  background-color: white;
+}
+.parent-search .list-search p:hover {
+  background-color: #337AB7;
+  color: white;
+}

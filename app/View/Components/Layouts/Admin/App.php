@@ -2,18 +2,21 @@
 
 namespace App\View\Components\Layouts\Admin;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\View\Component;
 
 class App extends Component
 {
+    public $title;
+
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($title = "Dashboard")
     {
-        //
+        $this->title = $title;
     }
 
     /**
@@ -23,6 +26,10 @@ class App extends Component
      */
     public function render()
     {
-        return view('components.layouts.admin.app');
+        $data = [
+            "is_su" => Auth::user()->is_super_admin
+        ];
+
+        return view('components.layouts.admin.app', $data);
     }
 }

@@ -1,6 +1,10 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\{
+    DashboardController,
+    UserController,
+};
 
 /*
 |--------------------------------------------------------------------------
@@ -14,6 +18,18 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    // return view('welcome');
     return view("auth.login");
+});
+
+Route::group(["middleware" => "auth"], function() {
+    Route::get("/dashboard", DashboardController::class);
+
+    Route::group(["middlware" => "auth_super_admin"], function() {
+        
+        // User Managament
+        Route::resource("/dashboard/users", UserController::class)->only(["index", "create", "store"]);
+    });
+
+    // User Managament
+    Route::resource("/dashboard/users", UserController::class)->only(["show", "edit", "update"]);
 });

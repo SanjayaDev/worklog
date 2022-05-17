@@ -15,17 +15,21 @@
               <li class="sidebar-title">Menu</li>
 
               <li class="sidebar-item {{ $title == "Dashboard" ? 'active' : '' }}">
-                  <a href="/dash" class='sidebar-link'>
+                  <a href="/dashboard" class='sidebar-link'>
                       <i class="fas fa-dashboard"></i>
                       <span>Dashboard</span>
                   </a>
               </li>
-              <li class="sidebar-item {{ $title == "Users" ? 'active' : '' }}">
-                <a href="/dash/users" class='sidebar-link'>
-                  <i class="fas fa-users"></i>
-                  <span>Users</span>
-                </a>
-              </li>
+
+              @if ($is_su)
+                <li class="sidebar-item {{ $title == "Users Management" ? 'active' : '' }}">
+                  <a href="/dashboard/users" class='sidebar-link'>
+                    <i class="fas fa-users"></i>
+                    <span>Users</span>
+                  </a>
+                </li> 
+              @endif
+
               <li class="sidebar-item">
                 <form action="/logout" method="POST">
                   @csrf

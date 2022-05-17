@@ -14,7 +14,8 @@
 <body>
 
   <div id="app">
-    @include('components.layouts.admin.sidebar', ["title" => $title ?? "Dashboard"])
+
+    @include('components.layouts.admin.sidebar', ["title" => $title ?? "Dashboard", "is_su" => $is_su])
 
     <div id="main">
       <header class="mb-3">
