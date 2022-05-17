@@ -32,7 +32,7 @@ class UserRequest extends FormRequest
 
         if ($this->method() == "PUT") {
             $rules["id"] = "required|integer|exists:users,id";
-            $rules["email"] = "required|string|email|max:255|unique:users,email,{$this->id}";
+            $rules["email"] = "nullable|string|email|max:255|unique:users,email,{$this->id}";
             $rules["password"] = "nullable|string|min:6";
         }
 

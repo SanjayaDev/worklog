@@ -67,4 +67,42 @@ class UserTest extends TestCase
 
         $response->assertStatus(302);
     }
+
+    /**
+     * test validation update user
+     * 
+     */
+    public function test_validation_update_user()
+    {
+        $user = Auth::loginUsingId(1);
+
+        $this->actingAs($user, "web");
+
+        $response = $this->put("/dashboard/users/8", [
+            "name" => "",
+            "email" => "",
+            "password" => "",
+            "is_super_admin" => "",
+        ]);
+
+        $response->assertInvalid();
+    }
+
+    /**
+     * Test user su update user
+     * 
+     */
+    public function test_user_su_update_user()
+    {
+        $user = Auth::loginUsingId(1);
+
+        $this->actingAs($user, "web");
+
+        $response = $this->put("/dashboard/users/8", [
+            "name" => "Test User Anjass",
+            "id" => 8
+        ]);
+
+        $response->assertRedirect("/dashboard/users/8");
+    }
 }
