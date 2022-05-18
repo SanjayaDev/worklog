@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\{
     DashboardController,
     UserController,
+    ProjectController
 };
 
 /*
@@ -28,6 +29,8 @@ Route::group(["middleware" => "auth"], function() {
         
         // User Managament
         Route::resource("/dashboard/users", UserController::class)->only(["index", "create", "store"]);
+
+        Route::resource("/dashboard/projects", ProjectController::class)->except(["destroy"]);
     });
 
     // User Managament
