@@ -50,8 +50,9 @@ class ProjectController extends Controller
         $list_user = $values["user_id"];
         unset($values["user_id"]);
 
+        // dd($list_user);
         $project = Project::create($values);
-        $project->users_pivot()->attach($list_user);
+        $project->users()->attach($list_user);
 
         Alert::success("Sukses!", "Sukses membuat project!");
         return \redirect("/dashboard/projects/$project->id");
@@ -101,7 +102,7 @@ class ProjectController extends Controller
         unset($values["user_id"]);
 
         $project->update($values);
-        $project->users_pivot()->sync($list_user);
+        $project->users()->sync($list_user);
 
         Alert::success("Sukses!", "Sukses mengubah project!");
         return \redirect("/dashboard/projects/$project->id");

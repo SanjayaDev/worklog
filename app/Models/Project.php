@@ -8,21 +8,16 @@ use Illuminate\Database\Eloquent\Model;
 class Project extends Model
 {
     use HasFactory;
+    protected $guarded = [
+        "project_id", "created_at", "updated_at"
+    ];
 
     /**
      * Relationship has many through users
      */
     public function users()
     {
-        return $this->belongsToMany(User::class, 'project_users');
-    }
-
-    /**
-     * Relationship has many user
-     */
-    public function users_pivot()
-    {
-        return $this->hasMany(ProjectUser::class);
+        return $this->belongsToMany(User::class, ProjectUser::class)->withTimestamps();
     }
 
     /**
