@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use Illuminate\Http\Request;
+use App\Services\UserService;
 use App\Http\Requests\UserRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -12,6 +12,21 @@ use RealRashid\SweetAlert\Facades\Alert;
 class UserController extends Controller
 {
     /**
+     * Property for user service
+     * 
+     */
+    private $user_service;
+
+    /**
+     * Constructor for load service
+     * 
+     */
+    public function __construct()
+    {
+        $this->user_service = new UserService;
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -19,7 +34,7 @@ class UserController extends Controller
     public function index()
     {
         $data = [
-            "users" => User::paginate(15)
+            "users" => $this->user_service->get_paginate()
         ];
 
         return \view("admin.users.index", $data);
@@ -43,31 +58,26 @@ class UserController extends Controller
      */
     public function store(UserRequest $request)
     {
-        $is_super_admin = 0;
-        if (Auth::user()->is_super_admin) {
-            $is_super_admin = isset($request->is_super_admin) ? 1 : 0;
+        $user = $this->user_service->store_user($request);
+        if ($user) {
+            Alert::success("Sukses!", "User berhasil ditambahkan");
+            return redirect("/dashboard/users/$user");
         }
-
-        $values = $request->validated();
-        $values["is_super_admin"] = $is_super_admin;
-        $values["password"] = Hash::make($values["password"]);
-
-        $user = User::create($values);
-
-        Alert::success("Sukses!", "User berhasil ditambahkan");
-        return redirect("/dashboard/users/$user->id");
+        
+        Alert::error("Gagal!", "Gagal menambahkan! Silahkan coba kembali!");
+        return back();
     }
 
     /**
      * Display the specified resource.
      *
-     * @param User $user
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function show(User $user)
+    public function show($id)
     {
         $data = [
-            "user" => $user
+            "user" => $this->user_service->get_by_id($id)
         ];
 
         return \view("admin.users.show", $data);
@@ -76,13 +86,13 @@ class UserController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param User $user
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(User $user)
+    public function edit($id)
     {
         $data = [
-            "user" => $user
+            "user" => $this->user_service->get_by_id($id)
         ];
 
         return \view("admin.users.edit", $data);
@@ -92,27 +102,17 @@ class UserController extends Controller
      * Update the specified resource in storage.
      *
      * @param  UserRequest $request
-     * @param  User $user
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UserRequest $request, User $user)
+    public function update(UserRequest $request, $id)
     {
-        $is_super_admin = 0;
-        if (Auth::user()->is_super_admin) {
-            $is_super_admin = isset($request->is_super_admin) ? 1 : 0;
+        $user = $this->user_service->update_user($request, $id);
+        if ($user) {
+            Alert::success("Sukses!", "User berhasil ditambahkan");
+            return redirect("/dashboard/users/$id");
         }
-
-        $values = $request->validated();
-        $values["is_super_admin"] = $is_super_admin;
-        if (!empty($values["password"])) {
-            $values["password"] = Hash::make($values["password"]);
-        } else {
-            unset($values["password"]);
-        }
-
-        $user->update($values);
-
-        Alert::success("Sukses!", "User berhasil ditambahkan");
-        return redirect("/dashboard/users/$user->id");
+        Alert::success("Sukses!", "User gagal diupdate! Silahkan coba kembali!");
+        return redirect("/dashboard/users/$id");
     }
 }
