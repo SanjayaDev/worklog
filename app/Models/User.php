@@ -21,7 +21,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        "is_super_admin"
+        'role_id'
     ];
 
     /**

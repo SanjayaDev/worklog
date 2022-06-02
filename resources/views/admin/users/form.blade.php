@@ -1,10 +1,7 @@
 <x-forms.input-group label="Name" name="name" value="{{ old('name') ?? $user->name ?? '' }}"></x-forms.input-group>
 
-@if (!isset($user))
-  <x-forms.input-group label="Email" name="email" type="email" value="{{ old('email') ?? $user->email ?? '' }}"></x-forms.input-group>
-@else 
-  <input type="hidden" name="id" value="{{ $user->id }}">
-@endif
+<x-forms.input-group label="Email" name="email" type="email" value="{{ old('email') ?? $user->email ?? '' }}"></x-forms.input-group>
+<input type="hidden" name="id" value="{{ $user->id ?? '' }}">
 
 <x-forms.input-group label="Password" name="password" type="password"></x-forms.input-group>
 

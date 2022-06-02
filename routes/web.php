@@ -29,7 +29,6 @@ Route::group(["middleware" => "auth"], function() {
         
         // User Managament
         Route::resource("/dashboard/users", UserController::class)->only(["index", "create", "store"]);
-
         Route::resource("/dashboard/projects", ProjectController::class)->except(["destroy"]);
     });
 
