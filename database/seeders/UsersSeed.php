@@ -22,5 +22,17 @@ class UsersSeed extends Seeder
             "email" => "rickysanjaya411@gmail.com",
             "password" => Hash::make("admin123"),
         ]);
+        User::create([
+            "role_id" => 2,
+            "name" => "User Admin",
+            "email" => "admin@gmail.com",
+            "password" => Hash::make("admin123"),
+        ]);
+        User::create([
+            "role_id" => 3,
+            "name" => "User Employee",
+            "email" => "employee@gmail.com",
+            "password" => Hash::make("admin123"),
+        ]);
     }
 }
