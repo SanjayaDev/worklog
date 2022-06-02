@@ -39,5 +39,9 @@ class ModulesSeed extends Seeder
             "module_code" => "002UE",
             "module_name" => "Edit User"
         ]);
+        Module::create([
+            "module_code" => "002UES",
+            "module_name" => "Edit User Self"
+        ]);
     }
 }

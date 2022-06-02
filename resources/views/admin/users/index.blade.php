@@ -2,7 +2,9 @@
   
   <div class="card">
     <div class="card-body">
-      <a href="{{ dashboard_url('users/create') }}" class="btn btn-success btn-sm mb-3">Tambah</a>
+      @can('check-module', '002UA')
+        <a href="{{ dashboard_url('users/create') }}" class="btn btn-success btn-sm mb-3">Tambah</a>
+      @endcan
 
       <table class="table table-bordered w-100 table-responsive">
         <thead>

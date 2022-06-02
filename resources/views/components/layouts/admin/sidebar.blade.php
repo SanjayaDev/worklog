@@ -21,14 +21,14 @@
                   </a>
               </li>
 
-              @if ($is_su)
+              @can('check-module', '002U')
                 <li class="sidebar-item {{ $title == "Users Management" ? 'active' : '' }}">
                   <a href="/dashboard/users" class='sidebar-link'>
                     <i class="fas fa-users"></i>
                     <span>Users</span>
                   </a>
                 </li> 
-              @endif
+              @endcan
 
               <li class="sidebar-item">
                 <form action="/logout" method="POST">
