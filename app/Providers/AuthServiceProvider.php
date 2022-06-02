@@ -27,8 +27,13 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
+        // Gate for dynamic authorization
         Gate::define("check-module", function($user, $module_code) {
+
+            // If user not super admin
             if ($user->role_id > 1) {
+
+                // Check what's user role allow access this module
                 $check_exists = ModuleRole::whereHas("module", function($query) use ($module_code) {
                                     $query->where("module_code", $module_code);
                                 })->whereHas("role", function($query) use ($user) {
@@ -36,9 +41,11 @@ class AuthServiceProvider extends ServiceProvider
                                 })
                                 ->exists();
 
+                // return $check_exists;
                 return $check_exists;
             } 
 
+            // If user a super admin
             return TRUE;
         });
     }
