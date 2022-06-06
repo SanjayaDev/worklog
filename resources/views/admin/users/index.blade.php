@@ -12,7 +12,7 @@
             <th>No</th>
             <th>Name</th>
             <th>Email</th>
-            <th>Is Super Admin</th>
+            <th>Role</th>
             <th>Action</th>
           </tr>
         </thead>
@@ -22,7 +22,7 @@
               <td>{{ $loop->iteration }}</td>
               <td>{{ $user->name }}</td>
               <td>{{ $user->email }}</td>
-              <td>{{ $user->is_super_admin ? 'Yes' : 'No' }}</td>
+              <td>{{ $user->role->role_name }}</td>
               <td>
                 <a href="{{ dashboard_url('users/'.$user->id.'/edit') }}" class="btn btn-info btn-sm">Edit</a>
               </td>

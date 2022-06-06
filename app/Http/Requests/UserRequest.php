@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class UserRequest extends FormRequest
 {
@@ -27,8 +28,10 @@ class UserRequest extends FormRequest
             "name" => "required|string|max:255",
             "email" => "required|string|email|max:255|unique:users",
             "password" => "required|string|min:6",
-            "is_super_admin" => "nullable|max:1"
         ];
+        if (Auth::user()->role_id == 1) {
+            $rules["role_id"] = "required|exists:roles,id";
+        }
 
         if ($this->method() == "PUT") {
             $rules["id"] = "required|integer|exists:users,id";

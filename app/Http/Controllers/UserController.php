@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Services\UserService;
 use App\Http\Requests\UserRequest;
+use App\Models\Role;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -47,7 +48,10 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view("admin.users.create");
+        $data = [
+            "roles" => Role::where("id", ">", 1)->get()
+        ];
+        return view("admin.users.create", $data);
     }
 
     /**
@@ -92,7 +96,8 @@ class UserController extends Controller
     public function edit($id)
     {
         $data = [
-            "user" => $this->user_service->get_by_id($id)
+            "user" => $this->user_service->get_by_id($id),
+            "roles" => Role::where('id', '>', 1)->get()
         ];
 
         return \view("admin.users.edit", $data);

@@ -13,8 +13,8 @@
           <td>{{ $user->email }}</td>
         </tr>
         <tr>
-          <th>Super Admin</th>
-          <td>{{ $user->is_super_admin == 1 ? "Yes" : "" }}</td>
+          <th>Role</th>
+          <td>{{ $user->role->role_name }}</td>
         </tr>
       </table>
     </div>

@@ -2,6 +2,7 @@
 
 use App\Repository\UserRepository;
 use App\Http\Requests\UserRequest;
+use App\Models\Role;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
@@ -32,13 +33,12 @@ class UserService
    */
   public function store_user(UserRequest $request)
   {
-    $is_super_admin = 0;
-    if (Auth::user()->is_super_admin) {
-        $is_super_admin = isset($request->is_super_admin) ? 1 : 0;
+    $values = $request->validated();
+
+    if (Auth::user()->role_id != 1) {
+      $values["role_id"] = Role::where("id", 3)->values("id");
     }
 
-    $values = $request->validated();
-    $values["is_super_admin"] = $is_super_admin;
     $values["password"] = Hash::make($values["password"]);
 
     try {
@@ -71,14 +71,12 @@ class UserService
   public function update_user(UserRequest $request, $user_id)
   {
     $user = $this->user_repository->get_by_id($user_id);
+    $values = $request->validated();
 
-    $is_super_admin = 0;
-    if (Auth::user()->is_super_admin) {
-        $is_super_admin = isset($request->is_super_admin) ? 1 : 0;
+    if (Auth::user()->role_id != 1) {
+      $values["role_id"] = Role::where("id", 3)->values("id");
     }
 
-    $values = $request->validated();
-    $values["is_super_admin"] = $is_super_admin;
     if (!empty($values["password"])) {
         $values["password"] = Hash::make($values["password"]);
     } else {

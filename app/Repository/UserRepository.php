@@ -11,7 +11,7 @@ class UserRepository
 
   public function get_paginate($paginate)
   {
-    return User::paginate($paginate);
+    return User::with("role")->paginate($paginate);
   }
 
   public function get_by_id($id)

@@ -5,9 +5,16 @@
 
 <x-forms.input-group label="Password" name="password" type="password"></x-forms.input-group>
 
-@if (Auth::user()->is_super_admin)
-<div class="form-check">
-  <input class="form-check-input" type="checkbox" name="is_super_admin" value="1" {{ isset($user->is_super_admin) && $user->is_super_admin == 1 ? "checked" : "" }}>
-  <label class="form-check-label">Super Admin</label>
-</div>
+@if (Auth::user()->role_id == 1)
+  <div class="form-group">
+    <label>Roles</label>
+    <select name="role_id" class="form-control">
+      @foreach ($roles as $role)
+        <option @if(isset($user->role_id) && $user->role_id == $role->id) selected @endif value="{{ $role->id }}">{{ $role->role_name }}</option>
+      @endforeach
+    </select>
+    @error('role_id')
+      <small class="text-danger">{{ $message }}</small>
+    @enderror
+  </div>
 @endif
