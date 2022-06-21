@@ -21,7 +21,7 @@ class ProjectController extends Controller
             "projects" => Project::paginate(15)
         ];
 
-        return view("admin.projects.index", $data);
+        return $this->view_admin("projects.index", "Projects Management", $data, TRUE);
     }
 
     /**
@@ -35,7 +35,7 @@ class ProjectController extends Controller
             "users" => User::all(),
         ];
 
-        return view("admin.projects.create", $data);
+        return $this->view_admin("projects.create", "Create Project", $data);
     }
 
     /**
@@ -47,12 +47,7 @@ class ProjectController extends Controller
     public function store(ProjectRequest $request)
     {
         $values = $request->validated();
-        $list_user = $values["user_id"];
-        unset($values["user_id"]);
-
-        // dd($list_user);
         $project = Project::create($values);
-        $project->users()->attach($list_user);
 
         Alert::success("Sukses!", "Sukses membuat project!");
         return \redirect("/dashboard/projects/$project->id");
@@ -67,10 +62,11 @@ class ProjectController extends Controller
     public function show(Project $project)
     {
         $data = [
-            "project" => $project->with(["users", "assigments"])
+            "project" => $project->with(["owner"])->where("id", $project->id)->first(),
         ];
+        // dd($data);
 
-        return view("admin.projects.show", $data);
+        return $this->view_admin("projects.show", "Detail Project", $data);
     }
 
     /**
@@ -82,10 +78,11 @@ class ProjectController extends Controller
     public function edit(Project $project)
     {
         $data = [
-            "project" => $project->with("users_pivot"),
+            "project" => $project,
+            "users" => User::all()
         ];
 
-        return view("admin.projects.edit", $data);
+        return $this->view_admin("projects.edit", "Edit Project", $data);
     }
 
     /**
@@ -98,11 +95,7 @@ class ProjectController extends Controller
     public function update(ProjectRequest $request, Project $project)
     {
         $values = $request->validated();
-        $list_user = $values["user_id"];
-        unset($values["user_id"]);
-
         $project->update($values);
-        $project->users()->sync($list_user);
 
         Alert::success("Sukses!", "Sukses mengubah project!");
         return \redirect("/dashboard/projects/$project->id");

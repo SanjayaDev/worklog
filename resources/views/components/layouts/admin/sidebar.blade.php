@@ -30,6 +30,15 @@
                 </li> 
               @endcan
 
+              @can('check-module', '003PJ')
+                <li class="sidebar-item {{ $title == "Projects Management" ? 'active' : '' }}">
+                  <a href="/dashboard/projects" class='sidebar-link'>
+                    <i class="fas fa-walkie-talkie"></i>
+                    <span>Projects</span>
+                  </a>
+                </li> 
+              @endcan
+
               <li class="sidebar-item">
                 <form action="/logout" method="POST">
                   @csrf

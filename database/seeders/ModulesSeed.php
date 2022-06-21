@@ -43,5 +43,23 @@ class ModulesSeed extends Seeder
             "module_code" => "002UES",
             "module_name" => "Edit User Self"
         ]);
+
+        // Module 003PJ / Project Management
+        Module::create([
+            "module_code" => "003PJ",
+            "module_name" => "View Project Management",
+        ]);
+        Module::create([
+            "module_code" => "003PJA",
+            "module_name" => "Add Project",
+        ]);
+        Module::create([
+            "module_code" => "003PJD",
+            "module_name" => "Detail Project",
+        ]);
+        Module::create([
+            "module_code" => "003PJE",
+            "module_name" => "Edit Project",
+        ]);
     }
 }

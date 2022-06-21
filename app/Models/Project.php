@@ -9,22 +9,14 @@ class Project extends Model
 {
     use HasFactory;
     protected $guarded = [
-        "project_id", "created_at", "updated_at"
+        "id", "created_at", "updated_at"
     ];
 
     /**
-     * Relationship has many through users
+     * Relationship belongsTo user owner
      */
-    public function users()
+    public function owner()
     {
-        return $this->belongsToMany(User::class, ProjectUser::class)->withTimestamps();
-    }
-
-    /**
-     * Relationship has many assignments
-     */
-    public function assignments()
-    {
-        return $this->hasMany(Assignment::class)->with("user");
+        return $this->belongsTo(User::class, "owner_user", "id");
     }
 }

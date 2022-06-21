@@ -14,7 +14,7 @@ class ProjectRequest extends FormRequest
      */
     public function authorize()
     {
-        return Auth::user()->is_super_admin;
+        return TRUE;
     }
 
     /**
@@ -27,12 +27,8 @@ class ProjectRequest extends FormRequest
         $rules = [
             "project_name" => "required|string|max:255",
             "project_description" => "nullable|string",
-            "user_id.*" => "required|exists:users,id",
+            "owner_user" => "required|exists:users,id",
         ];
-
-        if ($this->method() == "PUT") {
-            $rules["id"] = "required|exists:projects,id";
-        }
 
         return $rules;
     }

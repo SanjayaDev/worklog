@@ -7,6 +7,7 @@ use App\Http\Controllers\{
     ProjectController,
     RoleController
 };
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,10 +21,11 @@ use App\Http\Controllers\{
 */
 
 Route::get('/', function () {
+    Auth::logout();
     return view("auth.login");
 });
 
-Route::group(["middleware" => "auth"], function() {
+Route::group(["middleware" => ["auth", "check_access_module:001"]], function() {
     Route::get("/dashboard", DashboardController::class);
 
     // User Managament
@@ -43,4 +45,13 @@ Route::group(["middleware" => "auth"], function() {
         Route::post("/dashboard/roles", [RoleController::class, "store"]);
         Route::put("/dashboard/roles/{role}/module/assign", [RoleController::class, "assign_module"]);
     });
+
+    // Project Management
+    Route::get("/dashboard/projects", [ProjectController::class, "index"])->middleware("check_access_module:003PJ");
+    Route::get("/dashboard/projects/create", [ProjectController::class, "create"])->middleware("check_access_module:003PJA");
+    Route::get("/dashboard/projects/{project}", [ProjectController::class, "show"])->middleware("check_access_module:003PJD|003PJD");
+    Route::get("/dashboard/projects/{project}/edit", [ProjectController::class, "edit"])->middleware("check_access_module:003PJD|003PJE");
+
+    Route::post("/dashboard/projects", [ProjectController::class, "store"])->middleware("check_access_module:003PJA");
+    Route::put("/dashboard/projects/{project}", [ProjectController::class, "update"])->middleware("check_access_module:003PJE");
 });

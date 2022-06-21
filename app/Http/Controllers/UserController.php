@@ -38,7 +38,7 @@ class UserController extends Controller
             "users" => $this->user_service->get_paginate()
         ];
 
-        return $this->view_admin("users.index", "User Management", $data, TRUE);
+        return $this->view_admin("users.index", "Users Management", $data, TRUE);
     }
 
     /**
