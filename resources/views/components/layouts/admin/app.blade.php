@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <meta type="CSRF-TOKEN" value="{{ csrf_token() }}">
-  <title>{{ $title ?? "Dashboard - Lokersmk.id" }}</title>
+  <title>{{ $title ?? "Dashboard" }}</title>
   <link rel="stylesheet" href="{{ asset('css/app.css') }}">
   <link rel="stylesheet" href="{{ asset('css/style.css') }}">
   @stack('styles')
@@ -28,6 +28,8 @@
         <h3>{{ $title ?? "Dashboard" }}</h3>
       </div>
       <div class="page-content">
+
+        {!! $breadcrumb !!}
 
         {{ $slot }}
 

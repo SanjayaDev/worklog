@@ -4,7 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\{
     DashboardController,
     UserController,
-    ProjectController
+    ProjectController,
+    RoleController
 };
 
 /*
@@ -33,4 +34,13 @@ Route::group(["middleware" => "auth"], function() {
     
     Route::post("/dashboard/users", [UserController::class, "store"])->middleware("check_access_module:002UA");
     Route::put("/dashboard/users/{user}", [UserController::class, "update"])->middleware("check_access_module:002UE|00UES");
+
+    // Role Management
+    Route::group(["middleware" => "auth_super_admin"], function() {
+        Route::get("/dashboard/roles", [RoleController::class, "index"]);
+        Route::get("/dashboard/roles/{role}", [RoleController::class, "show"]);
+
+        Route::post("/dashboard/roles", [RoleController::class, "store"]);
+        Route::put("/dashboard/roles/{role}/module/assign", [RoleController::class, "assign_module"]);
+    });
 });

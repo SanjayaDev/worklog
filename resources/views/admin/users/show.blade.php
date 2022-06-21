@@ -1,4 +1,4 @@
-<x-layouts.admin.app title="User Detail">
+<x-layouts.admin.app  :title="$title" :breadcrumb="$breadcrumb">
   
   <div class="card">
     <div class="card-body">

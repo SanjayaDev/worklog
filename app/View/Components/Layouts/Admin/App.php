@@ -8,15 +8,17 @@ use Illuminate\View\Component;
 class App extends Component
 {
     public $title;
+    public $breadcrumb;
 
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct($title = "Dashboard")
+    public function __construct($title = "Dashboard", $breadcrumb = "")
     {
         $this->title = $title;
+        $this->breadcrumb = $breadcrumb;
     }
 
     /**

@@ -8,6 +8,6 @@ class DashboardController extends Controller
 {
     public function __invoke()
     {
-        return \view("admin.index");
+        return $this->view_admin("index", "Dashboard", [], TRUE);
     }
 }

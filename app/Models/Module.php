@@ -11,4 +11,13 @@ class Module extends Model
     protected $guarded = [
         "id", "created_at", "updated_at"
     ];
+
+    /**
+     * Relationship to role with modulerole model
+     * 
+     */
+    public function module_roles()
+    {
+        return $this->hasMany(ModuleRole::class);
+    }
 }

@@ -38,7 +38,7 @@ class UserController extends Controller
             "users" => $this->user_service->get_paginate()
         ];
 
-        return \view("admin.users.index", $data);
+        return $this->view_admin("users.index", "User Management", $data, TRUE);
     }
 
     /**
@@ -51,7 +51,7 @@ class UserController extends Controller
         $data = [
             "roles" => Role::where("id", ">", 1)->get()
         ];
-        return view("admin.users.create", $data);
+        return $this->view_admin("users.create", "Create User", $data);
     }
 
     /**
@@ -84,7 +84,7 @@ class UserController extends Controller
             "user" => $this->user_service->get_by_id($id)
         ];
 
-        return \view("admin.users.show", $data);
+        return $this->view_admin("users.show", "User Detail", $data);
     }
 
     /**
@@ -100,7 +100,7 @@ class UserController extends Controller
             "roles" => Role::where('id', '>', 1)->get()
         ];
 
-        return \view("admin.users.edit", $data);
+        return $this->view_admin("users.edit", "Edit User", $data);
     }
 
     /**
